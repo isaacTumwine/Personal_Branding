@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Blog</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div class="container">
+  <header class="page-header">
+    <div class="branding">
+      
+      <h1>Create Update and detes</h1>
+    </div>
+  </header>
+  <div class="alert alert-warning">
+   
+  </div>
+  <main id="app">
+    <router-view></router-view>
+  </main>
+</div>
+
+<template id="blog-list">
+  <div class="actions">
+    <a class="btn btn-default" v-link="{path: '/add-blog'}">
+      <span class="glyphicon glyphicon-plus"></span>
+      <!-- Add blog -->
+    </a>
+  </div>
+  <div class="filters row">
+    <div class="form-group col-sm-3">
+      <label for="search-element">blog name</label>
+      <input v-model="searchKey" class="form-control" id="search-element" requred/>
+    </div>
+  </div>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <!-- <th>Content</th> -->
+      <th class="col-sm-2">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="blog in products | filterBy searchKey in 'name'">
+      <td>
+        <a v-link="{name: 'blog', params: {product_id: blog.id}}">{{ blog.name }}</a>
+      </td>
+      <td>{{ blog.description }}</td>
+      <td>
+        <!-- {{ blog.Content }} -->
+        <!-- <span class="glyphicon glyphicon-euro" aria-hidden="true"></span> -->
+      </td>
+      <td>
+        <a class="btn btn-warning btn-xs" v-link="{name: 'blog-edit', params: {product_id: blog.id}}">Edit</a>
+        <a class="btn btn-danger btn-xs" v-link="{name: 'blog-delete', params: {product_id: blog.id}}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</template>
+
+<template id="add-blog">
+  <!-- <h2>Add new blog</h2> -->
+  <form v-on:submit="createProduct">
+    <div class="form-group">
+      <label for="add-name">Name</label>
+      <input class="form-control" id="add-name" v-model="blog.name" required/>
+    </div>
+    <div class="form-group">
+      <label for="add-description">Description</label>
+      <textarea class="form-control" id="add-description" rows="10" v-model="blog.description"></textarea>
+    </div>
+    <div class="form-group">
+      <!-- <label for="add-Content">Content, <span class="glyphicon glyphicon-euro"></span></label> -->
+      <!-- <input type="number" class="form-control" id="add-Content" v-model="blog.Content"/> -->
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a v-link="'/'" class="btn btn-default">Cancel</a>
+  </form>
+</template>
+
+<template id="blog">
+  <h2>{{ Blog.name }}</h2>
+  <b>Description: </b>
+  <div>{{ Blog.description }}</div>
+  <b>Content:</b>
+  <!-- <div>{{ blog.Content }}<span class="glyphicon glyphicon-euro"></span></div> -->
+  <br/>
+  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+  <a v-link="'/'">Backt to blog list</a>
+</template>
+
+<template id="blog-edit">
+  <h2>Edit blog</h2>
+  <form v-on:submit="updateProduct">
+    <div class="form-group">
+      <label for="edit-name">Name</label>
+      <input class="form-control" id="edit-name" v-model="blog.name" required/>
+    </div>
+    <div class="form-group">
+      <label for="edit-description">Description</label>
+      <textarea class="form-control" id="edit-description" rows="3" v-model="blog.description"></textarea>
+    </div>
+    <div class="form-group">
+      <!-- <label for="edit-Content">Content, <span class="glyphicon glyphicon-euro"></span></label> -->
+      <input type="number" class="form-control" id="edit-Content" v-model="blog.Content"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a v-link="'/'" class="btn btn-default">Cancel</a>
+  </form>
+</template>
+
+<template id="blog-delete">
+  <h2>Delete blog {{ blog.name }}</h2>
+  <form v-on:submit="deleteProduct">
+    <p>The  cannot be undone.</p>
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a v-link="'/'" class="btn btn-default">Cancel</a>
+  </form>
+</template>
+
+</body>
+</html>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.13/vue-router.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
